@@ -43,17 +43,13 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Check login status
-        run: docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} ${{ secrets.REGISTRY_HOSTNAME }}
-
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
           # list of Docker images to use as base name for tags
           images: |
-            harbor.fzu.edu.cn/${{ github.event_name == 'pull_request' && github.event.pull_request.user.login || secrets.REGISTRY_USERNAME }}/${{ secrets.REGISTRY_REPONAME || github.event.repository.name }}
-            # ${{ secrets.REGISTRY_HOSTNAME || 'docker.io' }}/${{ github.event_name == 'pull_request' && github.event.pull_request.user.login || secrets.REGISTRY_USERNAME }}/${{ secrets.REGISTRY_REPONAME || github.event.repository.name }}
+            ${{ secrets.REGISTRY_HOSTNAME || 'docker.io' }}/${{ github.event_name == 'pull_request' && github.event.pull_request.user.login || secrets.REGISTRY_USERNAME }}/${{ secrets.REGISTRY_REPONAME || github.event.repository.name }}
           flavor: |
             latest=auto
           # generate Docker tags based on the following events/attributes
