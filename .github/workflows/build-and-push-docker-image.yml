@@ -60,6 +60,12 @@ jobs:
             type=ref,event=tag
             type=ref,event=branch
             type=ref,event=pr
+            
+      - name: Debug metadata output
+        run: |
+          echo "Tags: ${{ steps.meta.outputs.tags }}"
+          echo "Labels: ${{ steps.meta.outputs.labels }}"
+      
       - name: Push to Docker Hub
         uses: docker/build-push-action@v4
         with:
