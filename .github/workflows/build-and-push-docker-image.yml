@@ -43,6 +43,9 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
+      - name: Check login status
+        run: docker info
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
